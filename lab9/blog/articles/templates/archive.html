@@ -1,0 +1,59 @@
+<title>Архив всех статей</title>
+{% load static %}
+{% load url from future %}
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<body class="archive">
+    <div class="header">
+        <!-- Верхняя часть шапки: логотип и ссылки -->
+        <div class="header-top">
+            <img class="logo" src="{{ STATIC_URL }}img/fg.png" alt="Logo" />
+            <div class="header-text-area">
+                <p class="service-title">Коллективный блог</p>
+                <div class="user-links">
+                    {% if user.is_authenticated %}
+                        <span>Привет, {{ user.username }}!</span>
+                        <a href="{% url 'create_post' %}" class="new-article-link">Новая статья</a>
+                        <a href="{% url 'logout' %}" class="login-link">Выход</a>
+                    {% else %}
+                        <a href="{% url 'register' %}" class="login-link">Регистрация</a>
+                        <a href="{% url 'login' %}" class="login-link">Вход</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Блок с иконками для параллакса -->
+        <div class="icons-for-parallax">
+            <img class="icon-for-parallax-first" src="{{ STATIC_URL }}img/article-icon-for-parallax.png" alt="icon">
+            <img class="icon-for-parallax-second" src="{{ STATIC_URL }}img/article-icon-for-parallax.png" alt="icon">
+            <img class="icon-for-parallax-third" src="{{ STATIC_URL }}img/article-icon-for-parallax.png" alt="icon">
+        </div>
+    </div>
+
+    <div class="archive">
+        {% for post in posts %}
+        <div class="one-post">
+            <div class="one-post-shadow"></div>
+            <div class="post-header">
+                <h2 class="post-title">
+                    <a href="{% url 'get_article' article_id=post.id %}">{{ post.title }}</a>
+                </h2>
+                <button class="fold-button">Свернуть</button>
+            </div>
+            <div class="article-info">
+                <div class="article-author">{{ post.author.username }}</div>
+                <div class="article-created-date">{{ post.created_date }}</div>
+            </div>
+            <p class="article-text">{{ post.get_excerpt }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Подключаем скрипты (jQuery уже был, добавляем parallax.js) -->
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script src="{{ STATIC_URL }}js/highlight-post.js"></script>
+    <script src="{{ STATIC_URL }}js/helloworld.js"></script>
+    <script src="{{ STATIC_URL }}js/fold-post.js"></script>
+    <script src="{{ STATIC_URL }}js/parallax.js"></script>
+    <script src="{{ STATIC_URL }}js/parallax.js"></script>
+</body>

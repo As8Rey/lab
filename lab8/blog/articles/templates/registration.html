@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация</title>
+    {% load static %}
+    {% load url from future %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+</head>
+<body class="register-page">
+    <div class="header">
+        <img src="{% static 'img/fg.png' %}" alt="Logo" />
+    </div>
+    <div class="form-container">
+        <h1>Регистрация</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="username">Имя пользователя:</label>
+                <input type="text" name="username" id="username" value="{{ username|default:'' }}" required>
+            </div>
+            <div class="field">
+                <label for="email">Email (необязательно):</label>
+                <input type="email" name="email" id="email" value="{{ email|default:'' }}">
+            </div>
+            <div class="field">
+                <label for="password">Пароль:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <div class="field">
+                <label for="password2">Подтверждение пароля:</label>
+                <input type="password" name="password2" id="password2" required>
+            </div>
+            {% if errors %}
+                <div class="errors">
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="submit">
+                <input type="submit" value="Зарегистрироваться">
+            </div>
+        </form>
+        <p>Уже зарегистрированы? <a href="{% url 'login' %}">Войдите</a></p>
+    </div>
+</body>
+</html>

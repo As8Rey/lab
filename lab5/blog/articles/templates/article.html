@@ -1,0 +1,21 @@
+<head>
+    <title>{{ post.title }}</title>
+    {% load static %}
+    {% load url from future %}
+    <link rel="stylesheet" href="{% static 'css/article.css' %}">
+</head>
+<body class="article">
+    <div class="header">
+        <img src="{% static 'img/fg.png' %}" alt="Logo" />
+    </div>
+    <div class="article-content">
+        <h1>{{ post.title }}</h1>
+        <div class="article-info">
+            <div class="article-author">{{ post.author.username }}</div>
+            <div class="article-created-date">{{ post.created_date }}</div>
+        </div>
+        <div class="article-text">{{ post.text|linebreaks }}</div>
+        <a href="{% url 'archive' %}" class="back-link">Все записи</a>
+    </div>
+</body>
+</html>

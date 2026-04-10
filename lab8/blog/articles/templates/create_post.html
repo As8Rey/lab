@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    {% load url from future %}
+    <a href="{% url 'archive' %}" class="back-link">На главную</a>
+<head>
+    <title>Новая статья</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/creation_form.css' %}">
+</head>
+<body class="create-post">
+    <div class="header">
+        <img src="{% static 'img/fg.png' %}" alt="Logo" />
+    </div>
+    <div class="form-container">
+        <h1>Написать статью</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="title">Название статьи:</label>
+                <input type="text" name="title" id="title" value="{{ title|default:'' }}" />
+            </div>
+            <div class="field">
+                <label for="text">Текст статьи:</label>
+                <textarea name="text" id="text" rows="10">{{ text|default:'' }}</textarea>
+            </div>
+            {% if errors %}
+                <div class="errors">
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="submit">
+                <input type="submit" value="Сохранить" />
+            </div>
+        </form>
+        <a href="{% url 'archive' %}" class="back-link">На главную</a>
+    </div>
+</body>
+</html>

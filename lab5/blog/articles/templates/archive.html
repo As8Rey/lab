@@ -1,0 +1,30 @@
+<title>Архив всех статей</title>
+{% load static %}
+{% load url from future %}
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<body class="archive">
+    <div class="header">
+        <img src="{{ STATIC_URL }}img/fg.png" />
+        <div class="user-links">
+            {% if user.is_authenticated %}
+                <a href="{% url 'create_post' %}" class="new-article-link">Новая статья</a>
+            {% else %}
+                <a href="/admin/" class="login-link">Войти</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="archive">
+        {% for post in posts %}
+        <div class="one-post">
+            <h2 class="post-title">
+                <a href="{% url 'get_article' article_id=post.id %}">{{ post.title }}</a>
+            </h2>
+            <div class="article-info">
+                <div class="article-author">{{ post.author.username }}</div>
+                <div class="article-created-date">{{ post.created_date }}</div>
+            </div>
+            <p class="article-text">{{ post.get_excerpt }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
